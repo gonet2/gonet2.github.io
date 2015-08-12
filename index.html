@@ -136,7 +136,7 @@ agent2+------&gt;                +-----&gt; snowflake
 
 <p>具体的服务描述以及使用案例，请进入各个目录中阅读</p>
 
-<p>所有服务都依赖的一个基础服务是nsqd，用来搜集日志，所有的服务会把日志发送到本地的nsqd收集，通过nsqlookupd管理nsqd拓扑，通过tailn工具或nsq_tail，可以集中收集格式化的日志(json)，消息主题为 : LOG。</p>
+<p>所有服务都依赖的一个基础服务是nsqd，用来搜集日志，所有的服务会把日志发送到本地的nsqd收集，通过nsqlookupd管理nsqd拓扑，通过tailn工具或nsq_tail，可以<strong>集中收集</strong>格式化的日志(json)数据，消息主题为 : LOG。</p>
 
 <p>游戏中的归档日志(REDOLOG)，也会通过nsqd发布，并通过arch服务自动归档，消息主题为REDOLOG。</p>
 
