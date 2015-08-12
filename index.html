@@ -17,9 +17,9 @@
 
     <section class="main-content">
       <h1>
-<a id="欢迎使用gonet2" class="anchor" href="#%E6%AC%A2%E8%BF%8E%E4%BD%BF%E7%94%A8gonet2" aria-hidden="true"><span class="octicon octicon-link"></span></a>欢迎使用gonet/2</h1>
+<a id="欢迎使用" class="anchor" href="#%E6%AC%A2%E8%BF%8E%E4%BD%BF%E7%94%A8" aria-hidden="true"><span class="octicon octicon-link"></span></a>欢迎使用</h1>
 
-<p>gonet/2是全新架构的gonet，基于go语言开发，采用了先进的http/2协议作为服务器端主要通信工具，以microservice(微服务)作为主要思想进行架构，并采用docker作为服务发布手段。</p>
+<p>gonet/2是新一代游戏服务器骨架，基于go语言开发，采用了先进的http/2协议作为服务器端主要通信协议，以microservice(微服务)作为主要思想进行架构，采用docker作为服务发布手段。相比第一代<a href="http://github.com/xtaci/gonet">gonet</a>，基础技术选型更加先进，结构更加清晰易读可扩展。</p>
 
 <h2>
 <a id="相关文档" class="anchor" href="#%E7%9B%B8%E5%85%B3%E6%96%87%E6%A1%A3" aria-hidden="true"><span class="octicon octicon-link"></span></a>相关文档</h2>
@@ -49,7 +49,7 @@ MEM: 如: 分词，排名，pubsub
 </code></pre>
 
 <p>玩家对每种服务的请求量有巨大的不同，比如逻辑请求100次，分词请求1次，所以，没有必要1:1配置资源。
-当服务容量增长，如果在monolithic的架构上做(全部服务揉在一起成一个大进程），会严重浪费资源(大量资源闲置，性价比极低), 所以gonet2架构也是基于microservice的一次尝试。</p>
+当服务容量增长，如果在monolithic的架构上做(全部服务揉在一起成一个大进程），会严重浪费资源(大量资源闲置，性价比极低), 所以gonet/2架构也是基于microservice的一次尝试。</p>
 
 <p>为了把所有的服务串起来，必须满足的条件有：<br>
 1. 支持一元RPC调用 (一般的请求/应答模式，类似于函数调用)<br>
@@ -158,7 +158,7 @@ agent2+------&gt;                +-----&gt; snowflake
 <a href="https://github.com/tenywen/share">grpc,nsq等源码分析</a> -- by tenywen</li>
 </ul>
 
-<p>PS. 感谢热心网友</p>
+<p>PS. 感谢热心网友对源码的解读</p>
 
       <footer class="site-footer">
 
