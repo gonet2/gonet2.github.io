@@ -19,7 +19,7 @@
       <h1>
 <a id="欢迎使用" class="anchor" href="#%E6%AC%A2%E8%BF%8E%E4%BD%BF%E7%94%A8" aria-hidden="true"><span class="octicon octicon-link"></span></a>欢迎使用</h1>
 
-<p><strong>gonet/2</strong>是新一代游戏服务器骨架，基于<a href="http://golang.org">go语言</a>开发，采用了先进的<a href="http://http2.github.io/">http/2</a>协议作为服务器端主要通信协议，以microservice(微服务)作为主要思想进行架构，采用<a href="https://www.docker.com/">docker</a>作为服务发布手段。相比第一代<a href="http://github.com/xtaci/gonet">gonet</a>，基础技术选型更加先进，结构更加清晰易读可扩展。</p>
+<p><strong>gonet/2</strong>是新一代游戏服务器骨架，基于<a href="http://golang.org">go语言</a>开发，采用了先进的<a href="http://http2.github.io/">http/2</a>协议作为服务器端主要通信协议，以<a href="http://martinfowler.com/articles/microservices.html">microservice</a>作为主要思想进行架构，采用<a href="https://www.docker.com/">docker</a>作为服务发布手段。相比第一代<a href="http://github.com/xtaci/gonet">gonet</a>，基础技术选型更加先进，结构更加清晰易读可扩展。</p>
 
 <h2>
 <a id="相关文档" class="anchor" href="#%E7%9B%B8%E5%85%B3%E6%96%87%E6%A1%A3" aria-hidden="true"><span class="octicon octicon-link"></span></a>相关文档</h2>
@@ -34,29 +34,28 @@
 </ol>
 
 <h2>
-<a id="核心理念" class="anchor" href="#%E6%A0%B8%E5%BF%83%E7%90%86%E5%BF%B5" aria-hidden="true"><span class="octicon octicon-link"></span></a>核心理念</h2>
+<a id="为什么用microservice架构" class="anchor" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8microservice%E6%9E%B6%E6%9E%84" aria-hidden="true"><span class="octicon octicon-link"></span></a>为什么用microservice架构?</h2>
 
-<blockquote>
-<p>关键词: 分布式，手游服务器，基于GO语言        </p>
-</blockquote>
+<p>业务分离是游戏服务器架构的基本思路，通过职能划分，能够更加合理的调配服务器资源。
+资源的大分类包括，IO,CPU,MEM,BANDWIDTH, 例如常见的情景：        </p>
 
-<p>业务分离是游戏服务器架构的基本思路，通过职能划分，能够合理调配服务器资源。
-资源的大分类包括，IO,CPU,MEM, 例如常见的服务：        </p>
-
-<pre><code>IO: 如: 数据库，文件服务        
-CPU: 如: 游戏逻辑        
-MEM: 如: 分词，排名，pubsub     
+<pre><code>IO: 如: 数据库，文件服务，消耗大量读写        
+CPU: 如: 游戏逻辑，消耗大量指令        
+MEM: 如: 分词，排名，pubsub， 消耗大量内存   
+BANDWIDTH: 内网带宽高，外网带宽低，物理上越接近的，传输速度越高
 </code></pre>
 
-<p>玩家对每种服务的请求量有巨大的不同，比如逻辑请求100次，分词请求1次，所以，没有必要1:1配置资源。
-当服务容量增长，如果在monolithic的架构上做(全部服务揉在一起成一个大进程），会严重浪费资源(大量资源闲置，性价比极低), 所以gonet/2架构也是基于microservice的一次尝试。</p>
+<p>玩家对每种服务的请求量有<strong>巨大的不同</strong>，比如逻辑请求100次，分词请求1次，所以，没有必要1:1配置资源，通过microservice方式分离服务，可以根据业务使用情况，按需配置服务器资源。当服务容量增长，如果在monolithic的架构上做，即全部服务揉在一起成一个大进程，会严重浪费资源，比如大量内存被极少被使用的模块占用, 更严重的问题是，单台服务器的资源不是无限制的，虽然目前顶级配置的服务器可以安装高达96GB的内存，但也极其昂贵，部署量大的时候，产生的费用也不容小觑。</p>
+
+<h2>
+<a id="为什么选http2" class="anchor" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89http2" aria-hidden="true"><span class="octicon octicon-link"></span></a>为什么选HTTP/2?</h2>
 
 <p>为了把所有的服务串起来，必须满足的条件有：<br>
 1. 支持一元RPC调用 (一般的请求/应答模式，类似于函数调用)<br>
 2. 支持服务器推送（例如pubsub服务）<br>
-3. 支持双向流传递 (网关透传stream到后端)        </p>
+3. 支持双向流传递 (网关透传数据包到后端)        </p>
 
-<p>我们暂不想自己设计RPC，一是目前RPC繁多，没必要重新发明一个轮子，二是作为开源项目，应充分融入社区，利用现有资源。我们发现目前http2(rfc7540)支持所有以上的要求，google推出的gRPC就是基于http2的RPC实现，当前架构中，所有的服务(microservice)全部通过gRPC连接在一起。 http2支持stream multiplex，即可以在单一tcp连接上，传输多个流，非常适合表达透传数据。</p>
+<p>我们暂不想自己设计<a href="https://en.wikipedia.org/wiki/Remote_procedure_call">RPC</a>，一是目前RPC繁多，没必要重新发明轮子，二是作为开源项目，应充分融入社区，利用现有资源。我们发现目前http/2(rfc7540)支持所有以上的要求，google推出的<a href="http://grpc.io/">gRPC</a>就是一个基于http/2的RPC实现，当前架构中，所有的服务(microservice)全部通过gRPC连接在一起。 http/2支持stream multiplex，即可以在单一tcp连接上，传输多个stream，能够非常直观的1:1映射玩家数据流。</p>
 
 <p>附: HTTP/2 帧封装         </p>
 
@@ -89,8 +88,8 @@ MEM: 如: 分词，排名，pubsub
 10. <a href="https://github.com/gonet2/bgsave">bgsave</a>: 与redis结合的存档服务<br>
 11. <a href="https://github.com/gonet2/wordfilter">wordfilter</a>: 脏词过滤服务            </p>
 
-<h1>
-<a id="基础设施" class="anchor" href="#%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD" aria-hidden="true"><span class="octicon octicon-link"></span></a>基础设施</h1>
+<h2>
+<a id="基础设施" class="anchor" href="#%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD" aria-hidden="true"><span class="octicon octicon-link"></span></a>基础设施</h2>
 
 <ol>
 <li>
@@ -113,7 +112,7 @@ MEM: 如: 分词，排名，pubsub
 </ol>
 
 <h2>
-<a id="服务关系" class="anchor" href="#%E6%9C%8D%E5%8A%A1%E5%85%B3%E7%B3%BB" aria-hidden="true"><span class="octicon octicon-link"></span></a>服务关系：</h2>
+<a id="基本服务模型" class="anchor" href="#%E5%9F%BA%E6%9C%AC%E6%9C%8D%E5%8A%A1%E6%A8%A1%E5%9E%8B" aria-hidden="true"><span class="octicon octicon-link"></span></a>基本服务模型：</h2>
 
 <pre><code>             +
              |
@@ -144,9 +143,9 @@ agent2+------&gt;                +-----&gt; snowflake
 <p>nsqd部署的方式为： <strong>每个服务器实例部署一个</strong></p>
 
 <h2>
-<a id="qq" class="anchor" href="#qq" aria-hidden="true"><span class="octicon octicon-link"></span></a>QQ</h2>
+<a id="社区" class="anchor" href="#%E7%A4%BE%E5%8C%BA" aria-hidden="true"><span class="octicon octicon-link"></span></a>社区</h2>
 
-<p>QQ: 459420581</p>
+<p>QQ群: 459420581</p>
 
 <h2>
 <a id="链接" class="anchor" href="#%E9%93%BE%E6%8E%A5" aria-hidden="true"><span class="octicon octicon-link"></span></a>链接</h2>
