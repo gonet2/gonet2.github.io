@@ -52,10 +52,10 @@ BANDWIDTH: 内网带宽高，外网带宽低，物理上越接近的，传输速
 
 <p>为了把所有的服务串起来，必须满足的条件有：<br>
 1. 支持一元RPC调用 (一般的请求/应答模式，类似于函数调用)<br>
-2. 支持服务器推送（例如pubsub服务）<br>
-3. 支持双向流传递 (网关透传数据包到后端)        </p>
+2. 支持服务器推送（例如pubsub服务，异步通知）<br>
+3. 支持双向流传递 (网关透传设备数据包到后端，后端应答数据经过网关返回到设备)        </p>
 
-<p>我们暂不想自己设计<a href="https://en.wikipedia.org/wiki/Remote_procedure_call">RPC</a>，一是目前RPC繁多，没必要重新发明轮子，二是作为开源项目，应充分融入社区，利用现有资源。我们发现目前http/2(rfc7540)支持所有以上的要求，google推出的<a href="http://grpc.io/">gRPC</a>就是一个基于http/2的RPC实现，当前架构中，所有的服务(microservice)全部通过gRPC连接在一起。 http/2支持stream multiplex，即可以在单一tcp连接上，传输多个stream，能够非常直观的1:1映射玩家数据流。</p>
+<p>我们暂不想自己设计<a href="https://en.wikipedia.org/wiki/Remote_procedure_call">RPC</a>，一是目前RPC繁多，没必要重新发明轮子，二是作为开源项目，应充分融入社区，利用现有资源。我们发现目前http/2(rfc7540)满足以上所有条件，google推出的<a href="http://grpc.io/">gRPC</a>就是一个基于http/2的RPC实现，当前架构中，所有的服务(microservice)全部通过gRPC连接在一起。 http/2支持stream multiplex，即可以在同一条TCP连接上，传输多个stream(1:N)，stream概念能够非常直观的1:1映射玩家双向数据流。</p>
 
 <p>附: HTTP/2 帧封装         </p>
 
