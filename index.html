@@ -73,46 +73,7 @@ BANDWIDTH: 内网带宽高，外网带宽低，物理上越接近的，传输速
 </code></pre>
 
 <h2>
-<a id="游戏架构" class="anchor" href="#%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84" aria-hidden="true"><span class="octicon octicon-link"></span></a>游戏架构</h2>
-
-<p>进入每个服务阅读对应文档<br>
-1. <a href="https://github.com/gonet2/agent">agent</a>: 网关<br>
-2. <a href="https://github.com/gonet2/game">game</a>: 游戏逻辑<br>
-3. <a href="https://github.com/gonet2/snowflake">snowflake</a>: UUID发生器<br>
-4. <a href="https://github.com/gonet2/chat">chat</a>: 聊天服务<br>
-5. <a href="https://github.com/gonet2/auth">auth</a>: 鉴权，登陆环节<br>
-6. <a href="https://github.com/gonet2/libs">libs</a>: 公共组件包<br>
-7. <a href="https://github.com/gonet2/rank">rank</a>: 排名服务<br>
-8. <a href="https://github.com/gonet2/geoip">geoip</a>: IP归属查询<br>
-9. <a href="https://github.com/gonet2/arch">arch</a>: 归档服务<br>
-10. <a href="https://github.com/gonet2/bgsave">bgsave</a>: 与redis结合的存档服务<br>
-11. <a href="https://github.com/gonet2/wordfilter">wordfilter</a>: 脏词过滤服务            </p>
-
-<h2>
-<a id="基础设施" class="anchor" href="#%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD" aria-hidden="true"><span class="octicon octicon-link"></span></a>基础设施</h2>
-
-<ol>
-<li>
-<a href="http://nsq.io/">nsq</a><br>
-</li>
-<li>
-<a href="https://github.com/coreos/etcd">etcd</a><br>
-</li>
-</ol>
-
-<p>基础设施是用于支撑整个架构的基石，选择nsq, etcd的理由是:            </p>
-
-<ol>
-<li>全部采用go实现，技术栈统一<br>
-</li>
-<li>nsq在bitly商用效果很好，能支持大规模的，高可用(特别是发生网络分区)的分布式应用<br>
-</li>
-<li>etcd是coreos出品的coordinator, 已经得到大面积的使用，有成功案例，配套完善。<br>
-</li>
-</ol>
-
-<h2>
-<a id="基本服务模型" class="anchor" href="#%E5%9F%BA%E6%9C%AC%E6%9C%8D%E5%8A%A1%E6%A8%A1%E5%9E%8B" aria-hidden="true"><span class="octicon octicon-link"></span></a>基本服务模型：</h2>
+<a id="基本服务模型" class="anchor" href="#%E5%9F%BA%E6%9C%AC%E6%9C%8D%E5%8A%A1%E6%A8%A1%E5%9E%8B" aria-hidden="true"><span class="octicon octicon-link"></span></a>基本服务模型</h2>
 
 <pre><code>             +
              |
@@ -149,6 +110,50 @@ agent2+------&gt;                +-----&gt; snowflake
 <p>游戏中的归档日志(REDOLOG)，也会通过nsqd发布，并通过arch服务自动归档，消息主题为REDOLOG。</p>
 
 <p>nsqd部署的方式为： <strong>每个服务器实例部署一个</strong></p>
+
+<h2>
+<a id="实际项目中怎么使用gonet2" class="anchor" href="#%E5%AE%9E%E9%99%85%E9%A1%B9%E7%9B%AE%E4%B8%AD%E6%80%8E%E4%B9%88%E4%BD%BF%E7%94%A8gonet2" aria-hidden="true"><span class="octicon octicon-link"></span></a>实际项目中怎么使用gonet/2?</h2>
+
+<p>clone下来慢慢改，不提供插件接口式的可升级模块，gonet/2只提供关键通路和demo，我不想做一个侵入式的骨架，只想在架构层面提供一个我认为比较优秀的思路并在此基础上努力做到个方面最优。</p>
+
+<h2>
+<a id="游戏模块" class="anchor" href="#%E6%B8%B8%E6%88%8F%E6%A8%A1%E5%9D%97" aria-hidden="true"><span class="octicon octicon-link"></span></a>游戏模块</h2>
+
+<p>进入每个服务阅读对应文档<br>
+1. <a href="https://github.com/gonet2/agent">agent</a>: 网关<br>
+2. <a href="https://github.com/gonet2/game">game</a>: 游戏逻辑<br>
+3. <a href="https://github.com/gonet2/snowflake">snowflake</a>: UUID发生器<br>
+4. <a href="https://github.com/gonet2/chat">chat</a>: 聊天服务<br>
+5. <a href="https://github.com/gonet2/auth">auth</a>: 鉴权，登陆环节<br>
+6. <a href="https://github.com/gonet2/libs">libs</a>: 公共组件包<br>
+7. <a href="https://github.com/gonet2/rank">rank</a>: 排名服务<br>
+8. <a href="https://github.com/gonet2/geoip">geoip</a>: IP归属查询<br>
+9. <a href="https://github.com/gonet2/arch">arch</a>: 归档服务<br>
+10. <a href="https://github.com/gonet2/bgsave">bgsave</a>: 与redis结合的存档服务<br>
+11. <a href="https://github.com/gonet2/wordfilter">wordfilter</a>: 脏词过滤服务            </p>
+
+<h2>
+<a id="基础设施" class="anchor" href="#%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD" aria-hidden="true"><span class="octicon octicon-link"></span></a>基础设施</h2>
+
+<ol>
+<li>
+<a href="http://nsq.io/">nsq</a><br>
+</li>
+<li>
+<a href="https://github.com/coreos/etcd">etcd</a><br>
+</li>
+</ol>
+
+<p>基础设施是用于支撑整个架构的基石，选择nsq, etcd的理由是:            </p>
+
+<ol>
+<li>全部采用go实现，技术栈统一<br>
+</li>
+<li>nsq在bitly商用效果很好，能支持大规模的，高可用(特别是发生网络分区)的分布式应用<br>
+</li>
+<li>etcd是coreos出品的coordinator, 已经得到大面积的使用，有成功案例，配套完善。<br>
+</li>
+</ol>
 
 <h2>
 <a id="社区" class="anchor" href="#%E7%A4%BE%E5%8C%BA" aria-hidden="true"><span class="octicon octicon-link"></span></a>社区</h2>
