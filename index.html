@@ -134,6 +134,14 @@ agent2+------&gt;                +-----&gt; snowflake
                               +        
 </code></pre>
 
+<p>使用方式假定为：         </p>
+
+<ol>
+<li>前端用两个部署在不同物理服务器上的agent服务接入，无状态，客户端随机访问任意一台agent接入，比如使用DNS round robin方式连接。</li>
+<li>agent和auth配合处理完鉴权等工作后，根据协议号段的划分数据包透传进入game进行逻辑处理。</li>
+<li>game和各个独立service通信，配合处理逻辑。</li>
+</ol>
+
 <p>具体的服务描述以及使用案例，请进入各个目录中阅读</p>
 
 <p>所有服务都依赖的一个基础服务是nsqd，用来搜集日志，所有的服务会把日志发送到本地的nsqd收集，通过nsqlookupd管理nsqd拓扑，通过tailn工具或nsq_tail，可以<strong>集中收集</strong>格式化的日志(json)数据，消息主题为 : LOG。</p>
