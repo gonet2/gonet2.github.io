@@ -135,6 +135,17 @@ agent2+------&gt;                +-----&gt; snowflake
 <h2>
 <a id="基础设施" class="anchor" href="#%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD" aria-hidden="true"><span class="octicon octicon-link"></span></a>基础设施</h2>
 
+<p><img src="http://gonet2.github.io/design.png" alt="design"></p>
+
+<p>术语：</p>
+
+<ol>
+<li>coordinator -- zk, etcd这种分布式一致性服务</li>
+<li>message backbone -- 服务器件消息总线，通常为pub/sub模式，数据密集</li>
+</ol>
+
+<p>实现:</p>
+
 <ol>
 <li>
 <a href="http://nsq.io/">nsq</a><br>
