@@ -133,6 +133,19 @@ agent2+------&gt;                +-----&gt; snowflake
 11. <a href="https://github.com/gonet2/wordfilter">wordfilter</a>: 脏词过滤服务            </p>
 
 <h2>
+<a id="模块设计约定" class="anchor" href="#%E6%A8%A1%E5%9D%97%E8%AE%BE%E8%AE%A1%E7%BA%A6%E5%AE%9A" aria-hidden="true"><span class="octicon octicon-link"></span></a>模块设计约定</h2>
+
+<ol>
+<li>
+<strong>零</strong>配置，配置集中化到coordinator(etcd/consul)，即：/etc distributed概念。<br>
+</li>
+<li>
+<strong>理论上</strong>，唯一可能需要的配置为ETCD_HOST环境变量，用于指定ETCD地址。<br>
+</li>
+<li>其他模块特定的参数(SERVER_ID什么的)，也通过环境变量指定，docker能方便的设定。</li>
+</ol>
+
+<h2>
 <a id="基础设施" class="anchor" href="#%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD" aria-hidden="true"><span class="octicon octicon-link"></span></a>基础设施</h2>
 
 <p><img src="http://gonet2.github.io/design.png" alt="design"></p>
