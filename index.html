@@ -57,6 +57,8 @@ BANDWIDTH: 内网带宽高，外网带宽低，物理上越接近的，传输速
 
 <p>我们暂不想自己设计<a href="https://en.wikipedia.org/wiki/Remote_procedure_call">RPC</a>，一是目前RPC繁多，没必要重新发明轮子，二是作为开源项目，应充分融入社区，利用现有资源。我们发现目前http/2(rfc7540)满足以上所有条件，google推出的<a href="http://grpc.io/">gRPC</a>就是一个基于http/2的RPC实现，当前架构中，所有的服务(microservice)全部通过gRPC连接在一起。 http/2支持stream multiplex，即可以在同一条TCP连接上，传输多个stream(1:N)，stream概念能够非常直观的1:1映射玩家双向数据流。</p>
 
+<p>(请特别注意一点，HTTP/2仅用于服务器各个服务间的内部通信，和客户端的通信是自定义协议，位于：<a href="https://github.com/gonet2/tools/tree/master/proto_scripts">https://github.com/gonet2/tools/tree/master/proto_scripts</a>)</p>
+
 <p>附: HTTP/2 帧封装         </p>
 
 <pre><code>    +-----------------------------------------------+
