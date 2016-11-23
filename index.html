@@ -7,7 +7,8 @@
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/github-light.css">
-    <meta name="viewport" content="width=device-width">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -15,11 +16,14 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1>gonet/2</h1>
-        <p>a game server skeleton in microservice</p>
+        <h1 class="header">gonet/2</h1>
+        <p class="header">a game server skeleton in microservice</p>
 
 
-        <p class="view"><a href="https://github.com/gonet2">View My GitHub Profile</a></p>
+
+        <ul>
+          <li><a class="buttons github" href="https://github.com/gonet2">GitHub Profile</a></li>
+        </ul>
 
       </header>
       <section>
@@ -112,8 +116,6 @@ agent2+------&gt;                +-----&gt; snowflake
 
 <p>具体的服务描述以及使用案例，请进入各个目录中阅读。</p>
 
-<p>游戏中的归档日志(REDOLOG)，也会通过nsqd发布，并通过archiver服务自动归档，消息主题为REDOLOG，归档日志可以作为游戏数据分析的基础，也可以用来精确回档数据库。</p>
-
 <h2>
 <a id="实际项目中怎么使用gonet2" class="anchor" href="#%E5%AE%9E%E9%99%85%E9%A1%B9%E7%9B%AE%E4%B8%AD%E6%80%8E%E4%B9%88%E4%BD%BF%E7%94%A8gonet2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>实际项目中怎么使用gonet/2?</h2>
 
@@ -152,6 +154,8 @@ agent2+------&gt;                +-----&gt; snowflake
 <a id="日志分析模型" class="anchor" href="#%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90%E6%A8%A1%E5%9E%8B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>日志分析模型</h2>
 
 <p><img src="http://gonet2.github.io/log.png" alt="loganalyticmodel"></p>
+
+<p>日志分析是通往数据驱动的关键步骤，内容过于庞大，暂留组建图于此，有机会再详谈。</p>
 
 <h2>
 <a id="基础设施" class="anchor" href="#%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>基础设施</h2>
@@ -210,10 +214,10 @@ agent2+------&gt;                +-----&gt; snowflake
 <p>欢迎使用支付宝扫描上面的二维码，对该项目进行捐赠。捐赠款项将用于持续优化及完善文档。</p>
       </section>
       <footer>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
       </footer>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
   </body>
 </html>
