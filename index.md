@@ -44,7 +44,6 @@
 
                  +
                  |
-                 +--------------> auth
                  |
                  +----> game1
                  |
@@ -77,14 +76,6 @@ clone下来慢慢改，不提供插件接口式的可升级模块，gonet/2只�
 1. [agent](https://github.com/gonet2/agent): 网关      
 2. [game](https://github.com/gonet2/game): 游戏逻辑     
 3. [snowflake](https://github.com/gonet2/snowflake): UUID发生器      
-4. [chat](https://github.com/gonet2/chat): 聊天服务      
-5. [auth](https://github.com/gonet2/auth): 鉴权，登陆环节     
-6. [libs](https://github.com/gonet2/libs): 公共组件包       
-7. [rank](https://github.com/gonet2/rank): 排名服务     
-8. [geoip](https://github.com/gonet2/geoip): IP归属查询         
-9. [arch](https://github.com/gonet2/arch): 归档服务          
-10. [bgsave](https://github.com/gonet2/bgsave): 与redis结合的存档服务          
-11. [wordfilter](https://github.com/gonet2/wordfilter): 脏词过滤服务            
 
 ## 模块设计约定
 1. **零**配置，配置集中化到coordinator(etcd/consul)，即：/etc distributed概念。                    
