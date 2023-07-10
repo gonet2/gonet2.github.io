@@ -98,9 +98,6 @@ clone下来慢慢改，不提供插件接口式的可升级模块，gonet/2只�
 
 基础设施是用于支撑整个架构的基石。
 
-## 社区
-QQ群: 459420581
-
 ## 链接
 * [gonet/2 unity 客户端网络库](https://github.com/en/libunity) -- by ycs
 * [Gonet2游戏服务器框架解析](http://blog.csdn.net/q26335804/article/category/5726691)  -- by 高
@@ -114,9 +111,3 @@ PS. 感谢热心网友对源码的解读
 * protobuf golang plugin: https://github.com/golang/protobuf
 * grpc: http://grpc.io
 * http/2: http://http2.github.io/
-
-## 赞助此项目
-![donate](http://gonet2.github.io/donate.png)
-
-欢迎使用支付宝扫描上面的二维码，对该项目进行捐赠。捐赠款项将用于持续优化及完善文档。
-
